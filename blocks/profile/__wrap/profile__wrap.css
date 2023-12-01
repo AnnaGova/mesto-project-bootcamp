@@ -1,0 +1,17 @@
+.profile__wrap {
+  max-width: 336px;
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  align-items: baseline;
+  /*padding-top: 22px;
+  padding-bottom: 25px;*/
+  box-sizing: border-box;
+}
+
+@media (max-width: 320px) {
+  .profile__wrap {
+    position: relative;
+  }
+
+}

@@ -1,0 +1,14 @@
+.profile__summury {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+@media (max-width:480px) {
+  .profile__summury {
+    flex-direction: column;
+    align-items: center;
+    gap: 22.25px
+  }
+}

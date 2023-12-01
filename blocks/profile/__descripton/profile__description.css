@@ -1,0 +1,16 @@
+.profile__description {
+  color: #FFF;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+@media (max-width: 460px) {
+  .profile__description {
+    font-size: 14px;
+    text-align: center;
+  }
+}
