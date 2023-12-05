@@ -18,7 +18,7 @@
   opacity: 0.8;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 580px) {
   .popup__button-save{
     max-width: 238px;
     margin: 15px 22px 25px;
