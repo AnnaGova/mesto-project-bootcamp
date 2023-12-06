@@ -1,4 +1,5 @@
 .profile__name {
+  max-width: 295px;
   color: #FFF;
   font-size: 42px;
   font-style: normal;
@@ -18,6 +19,7 @@
 
 @media (max-width: 460px) {
   .profile__name {
+    max-width: 189px;
     font-size: 27px;
     line-height: normal;
     text-align: center;
