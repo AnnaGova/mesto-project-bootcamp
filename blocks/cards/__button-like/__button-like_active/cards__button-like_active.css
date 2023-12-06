@@ -1,0 +1,7 @@
+.cards__button-like_active{
+  background: url("../../../../images/Union.svg") center no-repeat;
+  min-width: 22px;
+  height: 19px;
+  border: 0;
+  padding: 0;
+}
