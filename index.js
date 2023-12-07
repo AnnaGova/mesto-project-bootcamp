@@ -1,21 +1,106 @@
 //Выбор элементов
-const likeButtons = document.querySelectorAll('.cards__button-like');
-const deleteButtons = document.querySelectorAll('.cards__button-delete');
 const editButton = document.querySelector('.profile__button-edit');
 const closeButton = document.querySelector('.popup__button-close');
 const popupElement = document.querySelector('.popup');
 const addButton = document.querySelector('.profile__button-add');
 const photosPopup = document.querySelector('.popup-photos');
 const  photosPopupButton = document.querySelector('.popup-photos__button-close');
+const placesList = document.querySelector('.cards__list');
+
+//Добавление карточек с картинками через список
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+    alt: 'Красивое место'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
+    alt: 'Красивое место'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
+    alt: 'Красивое место'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
+    alt: 'Красивое место'
+
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
+    alt: 'Красивое место'
+
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+    alt: 'Красивое место'
+
+  }
+];
+
+for (let i=0; i < initialCards.length; i++) {
+  const placesTeamplate = document.querySelector('#cards-teamplate').content;
+  const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
+
+  const placeName = cardsElement.querySelector('.cards__name');
+  const placePhoto = cardsElement.querySelector('.cards__img');
+
+  placeName.textContent = initialCards[i].name;
+  placePhoto.src = initialCards[i].link;
+  placePhoto.alt = initialCards[i].alt;
+
+  placesList.append(cardsElement);
+
+}
+
+//добавление фотографий
+
+const formPlaces = document.querySelector('.popup-photos__form');
+const placeNameInput = formPlaces.querySelector('.popup__form-item_place');
+const linkInput = formPlaces.querySelector('.popup__form-item_link')
+
+function addPlaces(evt) {
+  evt.preventDefault();
+  //Копируем значение teanplate
+  const placesTeamplate = document.querySelector('#cards-teamplate').content;
+  const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
+//Получаем значение полей ввода
+  const namePlaceValue = placeNameInput.value;
+  const linkValue = linkInput.value;
+//выбираем места для вставки новых значений
+  const placeName = cardsElement.querySelector('.cards__name');
+  const placePhoto = cardsElement.querySelector('.cards__img');
+//присваеваем новые значения
+  placePhoto.src = linkValue;
+  placeName.textContent = namePlaceValue;
+//добавляем карточку в список
+  placesList.prepend(cardsElement);
+
+  photosPopup.classList.remove('popup_opened');
+
+}
+
+formPlaces.addEventListener('submit', addPlaces);
+
+
+const likeButtons = document.querySelectorAll('.cards__button-like');
 
 //Функция активации кнопки cards__button-like.
   likeButtons.forEach(function(likeButton) {
     likeButton.addEventListener('click', function(evt) {
-      evt.target.classList.toggle('cards__button-like_active')
+      evt.target.classList.toggle('cards__button-like_active');
+
   });
 
 });
 
+const deleteButtons = document.querySelectorAll('.cards__button-delete');
 //функция для удаления карточек при нажатии на кнпку
 
 deleteButtons.forEach(function(deleteButton) {
@@ -44,20 +129,20 @@ closeButton.addEventListener('click', function() {
 // Находим форму в DOM
 const formElement = document.querySelector('.popup__form');
 // Находим поля формы в DOM
-let nameInput = document.querySelector('.popup__form-item_name');
-let jobInput = document.querySelector('.popup__form-item_description');
+const nameInput = document.querySelector('.popup__form-item_name');
+const jobInput = document.querySelector('.popup__form-item_description');
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleFormSubmit(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
-    let nameValue = nameInput.value;
-    let jobValue = jobInput.value;
+    const nameValue = nameInput.value;
+    const jobValue = jobInput.value;
     // Выберите элементы, куда должны быть вставлены значения полей
 
-   let profileName = document.querySelector('.profile__name');
-   let profileDescription = document.querySelector('.profile__description');
+   const profileName = document.querySelector('.profile__name');
+   const profileDescription = document.querySelector('.profile__description');
 
     // Вставьте новые значения с помощью textContent
     profileName.textContent = nameValue;
@@ -80,37 +165,6 @@ addButton.addEventListener('click', function(evt){
 photosPopupButton.addEventListener('click', function(){
   photosPopup.classList.remove('popup_opened');
 });
-
-//добавление фотографий
-
-const formPlaces = document.querySelector('.popup-photos__form');
-const placeNameInput = formPlaces.querySelector('.popup__form-item_place');
-const linkInput = formPlaces.querySelector('.popup__form-item_link')
-
-function addPlaces(evt) {
-  evt.preventDefault();
-
-  const placesList = document.querySelector('.cards__list');
-  //Копируем значение teanplate
-  const placesTeamplate = document.querySelector('#cards-teamplate').content;
-  const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
-//Получаем значение полей ввода
-  const namePlaceValue = placeNameInput.value;
-  const linkValue = linkInput.value;
-//выбираем места для вставки новых значений
-  const placeName = cardsElement.querySelector('.cards__name');
-  const placePhoto = cardsElement.querySelector('.cards__img');
-//присваеваем новые значения
-  placePhoto.src = linkValue;
-  placeName.textContent = namePlaceValue;
-//добавляем карточку в список
-  placesList.prepend(cardsElement);
-
-  photosPopup.classList.remove('popup_opened');
-
-}
-
-formPlaces.addEventListener('submit', addPlaces);
 
 //Открытие попапа с картинкой
 
