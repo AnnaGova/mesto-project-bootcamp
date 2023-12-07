@@ -1,6 +1,7 @@
 .popup {
   position: relative;
-  display: none;
+  visibility: hidden;
+  transition: visibility 3s linear 0.5s;
 }
 
 .popup::before {

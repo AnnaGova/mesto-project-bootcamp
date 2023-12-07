@@ -4,7 +4,9 @@ const deleteButtons = document.querySelectorAll('.cards__button-delete');
 const editButton = document.querySelector('.profile__button-edit');
 const closeButton = document.querySelector('.popup__button-close');
 const popupElement = document.querySelector('.popup');
-
+const addButton = document.querySelector('.profile__button-add');
+const photosPopup = document.querySelector('.popup-photos');
+const  photosPopupButton = document.querySelector('.popup-photos__button-close');
 
 //Функция активации кнопки cards__button-like.
   likeButtons.forEach(function(likeButton) {
@@ -34,8 +36,7 @@ editButton.addEventListener('click', function() {
 //Функция для закртия модального окна при нажатии на крестик
 
 closeButton.addEventListener('click', function() {
-  popupElement.classList.remove('popup_opened')
-
+  popupElement.classList.remove('popup_opened');
 });
 
 //Сохранение данных
@@ -69,3 +70,44 @@ function handleFormSubmit(evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', handleFormSubmit);
+
+//Добавление фотографий
+
+addButton.addEventListener('click', function(evt){
+  photosPopup.classList.add('popup_opened');
+});
+
+photosPopupButton.addEventListener('click', function(){
+  photosPopup.classList.remove('popup_opened');
+});
+
+//добавление фотографий
+
+const formPlaces = document.querySelector('.popup-photos__form');
+const placeNameInput = formPlaces.querySelector('.popup__form-item_place');
+const linkInput = formPlaces.querySelector('.popup__form-item_link')
+
+function addPlaces(evt) {
+  evt.preventDefault();
+
+  const placesList = document.querySelector('.cards__list');
+  //Копируем значение teanplate
+  const placesTeamplate = document.querySelector('#cards-teamplate').content;
+  const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
+//Получаем значение полей ввода
+  const namePlaceValue = placeNameInput.value;
+  const linkValue = linkInput.value;
+//выбираем места для вставки новых значений
+  const placeName = cardsElement.querySelector('.cards__name');
+  const placePhoto = cardsElement.querySelector('.cards__img');
+//присваеваем новые значения
+  placePhoto.src = linkValue;
+  placeName.textContent = namePlaceValue;
+//добавляем карточку в список
+  placesList.prepend(cardsElement);
+
+  photosPopup.classList.remove('popup_opened');
+
+}
+
+formPlaces.addEventListener('submit', addPlaces);
