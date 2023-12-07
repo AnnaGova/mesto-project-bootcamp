@@ -111,3 +111,38 @@ function addPlaces(evt) {
 }
 
 formPlaces.addEventListener('submit', addPlaces);
+
+//Открытие попапа с картинкой
+
+//Выбираем все картинки
+
+const pictures = document.querySelectorAll('.cards__img');
+const picturesPopup = document.querySelector('.pictures-popup');
+
+pictures.forEach(function(picture) {
+  picture.addEventListener('click', function(){
+    picturesPopup.classList.add('popup_opened');
+    const imgPopup = document.querySelector('.pictures-popup__img');
+    imgPopup.src = picture.getAttribute('src');
+    imgPopup.alt = picture.getAttribute('alt');
+
+    //Переменная для текста под картинкой в окне попап
+    const textPicPopup = document.querySelector('.pictures-popup__text');
+    //Выбираем ближайшую карточку
+    const card = picture.closest('.cards__item')
+    //Переменная для текста с карточки картинки
+    const cardtexts = card.querySelector('.cards__name').textContent;
+    //Присваеваем текст блоку попап
+    textPicPopup.textContent = cardtexts;
+
+  });
+
+});
+
+//Кнопка закртыия попапа картинки
+
+const buttonClosePicPopup = document.querySelector('.pictures-popup__button-close');
+
+buttonClosePicPopup.addEventListener('click', function() {
+  picturesPopup.classList.remove('popup_opened');
+});

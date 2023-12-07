@@ -1,0 +1,6 @@
+.pictures-popup__wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 75vw;
+  max-height: 75vh;
+}

@@ -1,7 +1,7 @@
 .popup {
   position: relative;
   visibility: hidden;
-  transition: visibility 3s linear 0.5s;
+  transition: visibility linear 0.8s;
 }
 
 .popup::before {

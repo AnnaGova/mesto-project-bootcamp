@@ -53,3 +53,7 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__info/footer__info.css);
 
+@import url(../blocks/pictures-popup/pictures-popup.css);
+@import url(../blocks/pictures-popup/__img/pictures-popup__img.css);
+@import url(../blocks/pictures-popup/__wrap/pictures-popup__wrap.css);
+@import url(../blocks/pictures-popup/__text/pictures-popup__text.css);
