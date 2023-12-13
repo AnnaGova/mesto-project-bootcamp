@@ -106,7 +106,7 @@ const deleteButtons = document.querySelectorAll('.cards__button-delete');
 deleteButtons.forEach(function(deleteButton) {
   deleteButton.addEventListener('click', function(evt) {
     const cardsItem = document.querySelector('.cards__item');
-    cardsItem.remove()
+    evt.target.cardsItem.remove()
   });
 
 });
@@ -200,3 +200,23 @@ const buttonClosePicPopup = document.querySelector('.pictures-popup__button-clos
 buttonClosePicPopup.addEventListener('click', function() {
   picturesPopup.classList.remove('popup_opened');
 });
+
+// Event delegation for like and delete buttons
+placesList.addEventListener('click', function (evt) {
+  const target = evt.target;
+
+  // Check if the clicked element is a like button
+  if (target.classList.contains('cards__button-like')) {
+    target.classList.toggle('cards__button-like_active');
+  }
+
+  // Check if the clicked element is a delete button
+  if (target.classList.contains('cards__button-delete')) {
+    // Handle delete button click (e.g., remove the corresponding card)
+    const cardItem = target.closest('.cards__item');
+    if (cardItem) {
+      cardItem.remove();
+    }
+  }
+});
+
