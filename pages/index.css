@@ -57,3 +57,7 @@
 @import url(../blocks/pictures-popup/__img/pictures-popup__img.css);
 @import url(../blocks/pictures-popup/__wrap/pictures-popup__wrap.css);
 @import url(../blocks/pictures-popup/__text/pictures-popup__text.css);
+
+@import url(../blocks/popup/__form-item/_error/popup__form-item_error.css);
+@import url(../blocks/popup/__button-save/_disabled/popup__button-save_disabled.css);
+@import url(../blocks/popup/__text-error/popup__text-error.css);

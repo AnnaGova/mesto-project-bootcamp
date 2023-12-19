@@ -6,6 +6,7 @@
   flex-direction: column;
   max-width: 358px;
   margin-left: 36px;
+  margin-right: 36px;
 }
 
 @media (max-width: 320px) {

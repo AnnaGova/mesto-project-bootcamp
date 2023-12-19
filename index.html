@@ -38,22 +38,27 @@
       <div class="popup__container">
         <button type="button" class="button popup__button-close profile-popup__button-close"></button>
         <h2 class="popup__name">Редактировать профиль</h2>
-        <form name="profileInfo" class="popup__form" id="popupform">
-          <input type="text" class="popup__form-item popup__form-item_name" id="username" name="username" placeholder="Жак-Ив Кусто">
-          <input type="text" class="popup__form-item popup__form-item_description" id="description" name="description" placeholder="Исследователь океана">
+        <form name="profileInfo" class="popup__form" id="popupform" novalidate>
+          <input type="text" class="popup__form-item popup__form-item_name" id="username" name="username" placeholder="Жак-Ив Кусто" minlength="2" maxlength="24" required>
+          <span class="popup__text-error" id="username-error"></span>
+          <input type="text" class="popup__form-item popup__form-item_description" id="description" name="description" placeholder="Исследователь океана" minlength="2" maxlength="200" required>
+          <span class="popup__text-error" id="description-error"></span>
+          <button type="submit" class="popup__button-save" form="popupform">Сохранить</button>
         </form>
-        <button type="submit" class="popup__button-save" form="popupform">Сохранить</button>
+
       </div>
     </div>
     <div class="popup-photos popup">
       <div class="popup__container">
         <button type="button" class="button popup__button-close popup-photos__button-close"></button>
         <h2 class="popup__name">Новое место</h2>
-        <form name="addPhotos" class="popup__form popup-photos__form" id="popupphotos">
-          <input type="text" class="popup__form-item popup__form-item_place" id="plcace" name="username" placeholder="Название">
-          <input type="text" class="popup__form-item popup__form-item_link" id="link" name="description" placeholder="Ссылка на картинку">
+        <form name="addPhotos" class="popup__form popup-photos__form" id="popupphotos" novalidate>
+          <input type="text" class="popup__form-item popup__form-item_place" id="plcace" name="placename" placeholder="Название" required minlength="2" maxlength="30">
+          <span class="popup__text-error" id="placename-error"></span>
+          <input type="url" class="popup__form-item popup__form-item_link" id="link" name="linkplace" placeholder="Ссылка на картинку" required>
+          <span class="popup__text-error" id="linkplace-error"></span>
+         <button type="submit" class="popup__button-save" form="popupphotos">Создать</button>
         </form>
-        <button type="submit" class="popup__button-save" form="popupphotos">Сохранить</button>
       </div>
     </div>
    <div class="pictures-popup popup">
@@ -74,6 +79,6 @@
       </li>
     </template>
   </div>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
