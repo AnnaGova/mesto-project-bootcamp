@@ -62,18 +62,28 @@ const initialCards = [
   }
 ];
 
-for (let i=0; i < initialCards.length; i++) {
+
+function createCard () {
   const placesTeamplate = document.querySelector('#cards-teamplate').content;
   const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
 
-  const placeName = cardsElement.querySelector('.cards__name');
-  const placePhoto = cardsElement.querySelector('.cards__img');
+  return cardsElement
+};
+
+
+
+for (let i=0; i < initialCards.length; i++) {
+
+  const cardElement = createCard();
+
+  const placeName = cardElement.querySelector('.cards__name');
+  const placePhoto = cardElement.querySelector('.cards__img');
 
   placeName.textContent = initialCards[i].name;
   placePhoto.src = initialCards[i].link;
   placePhoto.alt = initialCards[i].alt;
 
-  placesList.append(cardsElement);
+  placesList.append(cardElement);
 
 }
 
@@ -152,19 +162,18 @@ window.addEventListener('keydown', escPopupClose);
 function addPlaces(evt) {
   evt.preventDefault();
   //Копируем значение teanplate
-  const placesTeamplate = document.querySelector('#cards-teamplate').content;
-  const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
+  const cardElement = createCard();
 //Получаем значение полей ввода
   const namePlaceValue = placeNameInput.value;
   const linkValue = linkInput.value;
 //выбираем места для вставки новых значений
-  const placeName = cardsElement.querySelector('.cards__name');
-  const placePhoto = cardsElement.querySelector('.cards__img');
+  const placeName = cardElement.querySelector('.cards__name');
+  const placePhoto = cardElement.querySelector('.cards__img');
 //присваеваем новые значения
   placePhoto.src = linkValue;
   placeName.textContent = namePlaceValue;
 //добавляем карточку в список
-  placesList.prepend(cardsElement);
+  placesList.prepend(cardElement);
 
   removePopupOpendclass(photosPopup);
 
