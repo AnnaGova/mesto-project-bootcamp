@@ -1,4 +1,11 @@
-//Добавление карточек с картинками через список
+//Список карточек
+const placesList = document.querySelector('.cards__list');
+const formPlaces = document.forms['addPhotos'];
+const photosPopup = document.querySelector('.popup-photos');
+const picturesPopup = document.querySelector('.pictures-popup');
+const imgPopup = document.querySelector('.pictures-popup__img');
+const textPicPopup = document.querySelector('.pictures-popup__text');
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -34,38 +41,80 @@ const initialCards = [
 
   }
 ];
+import { removePopupOpendclass } from "./utils";
+import { openPopup } from "./utils";
 
-for (let i=0; i < initialCards.length; i++) {
+//Функция createCard находит в DOM элемент cards-teamplate, копирует его содержимое и возвращает новую пустую карточку
+function createCard () {
   const placesTeamplate = document.querySelector('#cards-teamplate').content;
   const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
 
-  const placeName = cardsElement.querySelector('.cards__name');
-  const placePhoto = cardsElement.querySelector('.cards__img');
+  return cardsElement
+};
 
-  placeName.textContent = initialCards[i].name;
-  placePhoto.src = initialCards[i].link;
-  placePhoto.alt = initialCards[i].alt;
+export function fillCard () {
+  for (let i=0; i < initialCards.length; i++) {
 
-  placesList.append(cardsElement);
+    const cardElement = createCard();
 
-}
+    const placeName = cardElement.querySelector('.cards__name');
+    const placePhoto = cardElement.querySelector('.cards__img');
 
-function addPlaces(evt) {
+    placeName.textContent = initialCards[i].name;
+    placePhoto.src = initialCards[i].link;
+    placePhoto.alt = initialCards[i].alt;
+
+    placesList.append(cardElement);
+
+  }
+
+};
+
+export function setCardsEventListeners () {
+  placesList.addEventListener('click', function(evt) {
+    if (evt.target.classList.contains('cards__button-like')) {
+      evt.target.classList.toggle('cards__button-like_active');
+    }
+
+    if (evt.target.classList.contains('cards__button-delete')) {
+      const cardItem = evt.target.closest('.cards__item');
+      cardItem.remove();
+    }
+
+    if (evt.target.classList.contains('cards__img')) {
+      openPopup(picturesPopup);
+      imgPopup.src = evt.target.getAttribute('src');
+      imgPopup.alt = evt.target.getAttribute('alt');
+      //Выбираем ближайшую карточку
+      const card = evt.target.closest('.cards__item')
+      //Переменная для текста с карточки картинки
+      const cardtexts = card.querySelector('.cards__name').textContent;
+      //Присваеваем текст блоку попап
+      textPicPopup.textContent = cardtexts;
+
+    }
+
+  });
+};
+
+export function addPlaces(evt) {
   evt.preventDefault();
   //Копируем значение teanplate
-  const placesTeamplate = document.querySelector('#cards-teamplate').content;
-  const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
+  const cardElement = createCard();
 //Получаем значение полей ввода
+  const placeNameInput = formPlaces.querySelector('.popup__form-item_place');
+  const linkInput = formPlaces.querySelector('.popup__form-item_link');
+
   const namePlaceValue = placeNameInput.value;
   const linkValue = linkInput.value;
 //выбираем места для вставки новых значений
-  const placeName = cardsElement.querySelector('.cards__name');
-  const placePhoto = cardsElement.querySelector('.cards__img');
+  const placeName = cardElement.querySelector('.cards__name');
+  const placePhoto = cardElement.querySelector('.cards__img');
 //присваеваем новые значения
   placePhoto.src = linkValue;
   placeName.textContent = namePlaceValue;
 //добавляем карточку в список
-  placesList.prepend(cardsElement);
+  placesList.prepend(cardElement);
 
   removePopupOpendclass(photosPopup);
 

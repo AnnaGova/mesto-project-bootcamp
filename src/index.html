@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <link rel="stylesheet" href="pages/index.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
@@ -9,12 +8,12 @@
 <body class="body">
   <div class="page">
     <header class="header page__container">
-      <img src="images/header_logo.svg" alt="Mesto Russia" class="logo logo_place_header">
+      <img src= "<%=require('./images/header_logo.svg')%>" alt="Mesto Russia" class="logo logo_place_header">
     </header>
     <main class="content">
       <section class="profile page__container">
         <div class="profile__summury">
-          <img src="images/jacques_cousteau.jpg" alt="Аватар пользовотеля" class="profile__avatar">
+          <img src="<%=require('./images/jacques_cousteau.jpg')%>" alt="Аватар пользовотеля" class="profile__avatar">
           <div class="profile__wrap">
             <div class="profile__info">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -64,13 +63,13 @@
    <div class="pictures-popup popup">
       <div class="pictures-popup__wrap">
         <button type="button" class="button popup__button-close pictures-popup__button-close"></button>
-        <img src="" alt="Красивое место" class="pictures-popup__img">
+        <img src="<% %>" alt="Красивое место" class="pictures-popup__img">
         <h2 class="pictures-popup__text"></h2>
       </div>
     </div>
     <template id="cards-teamplate">
       <li class="cards__item">
-        <img src="" alt="" class="cards__img">
+        <img src="<% %>" alt="" class="cards__img">
         <div class="cards__content">
           <h2 class="cards__name"></h2>
           <button type="button" class="cards__button-like"></button>
@@ -79,6 +78,5 @@
       </li>
     </template>
   </div>
-  <script type="module" src="script.js"></script>
 </body>
 </html>
