@@ -21,6 +21,8 @@
 @import url(../blocks/profile/__summury/profile__summury.css);
 @import url(../blocks/profile/__button-edit/profile__button-edit.css);
 @import url(../blocks/profile/__button-add/profile__button-add.css);
+@import url(../blocks/profile/__avatar-edit/profile__avatar-edit.css);
+
 
 /*buttons*/
 @import url(../blocks/button/button.css);
@@ -65,4 +67,6 @@
 @import url(../blocks/popup/__text-error/popup__text-error.css);
 @import url(../blocks/cards/__like/cards__like.css);
 @import url(../blocks/cards/__like-wraper/cards__like-wraper.css);
+
+
 

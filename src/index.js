@@ -19,7 +19,11 @@ const formElement = document.querySelector('.popup__profile-form');
 const nameInput = document.querySelector('.popup__form-item_name');
 const jobInput = document.querySelector('.popup__form-item_description');
 const placesList = document.querySelector('.cards__list');
-const submitAddPhotosButton =  document.querySelector('.popup-photos__button-save')
+const submitAddPhotosButton =  document.querySelector('.popup-photos__button-save');
+const editAvatar = document.querySelector('.profile__avatar-edit');
+const popupAvatar = document.querySelector('.popup-avatar');
+const avatarEditForm = document.querySelector('.popup-avatar__form');
+const vatarSubmitButton = document.querySelector('.popup-editavatar__button-save');
 
 //Добавление карточек с картинками через список
 fillCard();
@@ -39,7 +43,25 @@ addButton.addEventListener('click', function(){
   submitAddPhotosButton.classList.add('popup__button-save_disabled');
 });
 
+editAvatar.addEventListener('click', function() {
+  openPopup(popupAvatar);
+  vatarSubmitButton.setAttribute('disabled', true);
+  vatarSubmitButton.classList.add('popup__button-save_disabled');
 
+})
+
+//Функция изменения фотографии профиля
+function changeAvatar(evt) {
+  evt.preventDefault();
+  const imgAva = document.querySelector('.profile__avatar');
+  const newAvaLink = document.querySelector('.popup__form_editavatar');
+  imgAva.src = newAvaLink.value;
+
+  avatarEditForm.reset();
+  closePopup(popupAvatar);
+};
+
+avatarEditForm.addEventListener('submit', changeAvatar);
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет

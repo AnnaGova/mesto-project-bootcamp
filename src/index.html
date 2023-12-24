@@ -13,7 +13,9 @@
     <main class="content">
       <section class="profile page__container">
         <div class="profile__summury">
-          <img src="<%=require('./images/jacques_cousteau.jpg')%>" alt="Аватар пользовотеля" class="profile__avatar">
+          <div class="profile__avatar-edit">
+            <img src="<%=require('./images/jacques_cousteau.jpg')%>" alt="Аватар пользовотеля" class="profile__avatar">
+          </div>
           <div class="profile__wrap">
             <div class="profile__info">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -60,6 +62,16 @@
         </form>
       </div>
     </div>
+    <div class="popup popup-avatar">
+      <div class="popup__container">
+        <button type="button" class="button popup__button-close popup-avatar__button-close"></button>
+        <h2 class="popup__name">Обновить аватар</h2>
+        <form name="editavatar" class="popup__form popup-avatar__form" id="editavatar" novalidate>
+          <input type="url" class="popup__form-item popup__form_editavatar" id="editavatar" name="editavatar" placeholder="Ссылка на картинку" required>
+          <span class="popup__text-error" id="editavatar-error"></span>
+         <button type="submit" class="popup__button-save popup-editavatar__button-save" form="editavatar">Сохранить</button>
+        </form>
+      </div>
    <div class="pictures-popup popup">
       <div class="pictures-popup__wrap">
         <button type="button" class="button popup__button-close pictures-popup__button-close"></button>
