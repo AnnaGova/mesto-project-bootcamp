@@ -1,0 +1,5 @@
+.cards__like-wraper {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+};

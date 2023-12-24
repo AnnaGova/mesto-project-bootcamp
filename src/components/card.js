@@ -1,7 +1,5 @@
 //Список карточек
 const placesList = document.querySelector('.cards__list');
-const formPlaces = document.forms['addPhotos'];
-const photosPopup = document.querySelector('.popup-photos');
 const picturesPopup = document.querySelector('.pictures-popup');
 const imgPopup = document.querySelector('.pictures-popup__img');
 const textPicPopup = document.querySelector('.pictures-popup__text');
@@ -41,11 +39,11 @@ const initialCards = [
 
   }
 ];
-import { removePopupOpendclass } from "./utils";
-import { openPopup } from "./utils";
+
+import { openPopup } from "./modal";
 
 //Функция createCard находит в DOM элемент cards-teamplate, копирует его содержимое и возвращает новую пустую карточку
-function createCard () {
+export function createCard () {
   const placesTeamplate = document.querySelector('#cards-teamplate').content;
   const cardsElement = placesTeamplate.querySelector('.cards__item').cloneNode(true);
 
@@ -96,26 +94,3 @@ export function setCardsEventListeners () {
 
   });
 };
-
-export function addPlaces(evt) {
-  evt.preventDefault();
-  //Копируем значение teanplate
-  const cardElement = createCard();
-//Получаем значение полей ввода
-  const placeNameInput = formPlaces.querySelector('.popup__form-item_place');
-  const linkInput = formPlaces.querySelector('.popup__form-item_link');
-
-  const namePlaceValue = placeNameInput.value;
-  const linkValue = linkInput.value;
-//выбираем места для вставки новых значений
-  const placeName = cardElement.querySelector('.cards__name');
-  const placePhoto = cardElement.querySelector('.cards__img');
-//присваеваем новые значения
-  placePhoto.src = linkValue;
-  placeName.textContent = namePlaceValue;
-//добавляем карточку в список
-  placesList.prepend(cardElement);
-
-  removePopupOpendclass(photosPopup);
-
-}

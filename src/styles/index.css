@@ -36,6 +36,8 @@
 @import url(../blocks/cards/__button-like/__button-like_active/cards__button-like_active.css);
 @import url(../blocks/cards/__button-delete/crads__button-delete.css);
 
+
+
 /*popup*/
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/popup.css);
@@ -61,3 +63,6 @@
 @import url(../blocks/popup/__form-item/_error/popup__form-item_error.css);
 @import url(../blocks/popup/__button-save/_disabled/popup__button-save_disabled.css);
 @import url(../blocks/popup/__text-error/popup__text-error.css);
+@import url(../blocks/cards/__like/cards__like.css);
+@import url(../blocks/cards/__like-wraper/cards__like-wraper.css);
+
