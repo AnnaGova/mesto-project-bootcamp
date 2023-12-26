@@ -1,71 +1,87 @@
 const config = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/wbf-cohort-15',
-  headers: {
+  headersInit: {
     authorization: 'fd37911a-3400-4108-a9b8-07945ed988a0',
     'Content-Type': 'application/json'
   }
 };
 
 
-//Функция для получения данных пользователя
-export const getUserInformation = () => {
+function onResponse(res) {
+  return res.ok
+    ? res.json()
+    : res.json().then((error) => Promise.reject(error));
 
-return fetch(`${config.baseUrl}/users/me`, {
-  method: 'GET',
-  headers: config.headers
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
-  });
+}
+
+function request (endpoint, options) {
+  return fetch(`${config.baseUrl}/${endpoint}`, {
+    method: 'GET',
+    ...options,
+    headers: {...config.headersInit, ...options?.headers}
+  }) .then(onResponse);
 };
 
+
+export const gerUsersInformation = () => {
+  return request('users/me');
+};
 
 //Загрузка первоначальных карточек
 
 export const getInitialCrads = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: 'GET',
-    headers: config.headers
-  })
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
+  return request('cards');
+};
+
+//Создание карточек
+export const addNewCard = (dataBody) => {
+  return request('cards', {
+    method: "POST",
+    body: JSON.stringify(dataBody),
   });
 };
 
-//edit ptofile data
-export const editProfile = () => {
-  return fetch (`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: 'Kusturiza Jan Jack',
-      about: 'Mamin Brodyaga Papin Simpotyaga'
-    })
+//редактирование профиля
 
-    });
+export const editProfile = (newProfInfo) => {
+  return request('users/me', {
+    method: "PATCH",
+    body: JSON.stringify(newProfInfo),
+  });
+};
+//Deelete cards
+export const deleteCard = (_id) => {
+  return request(`cards/${_id}`, {
+    method: "DELETE"
+  });
 };
 
-//Add new cards
 
-export const addNewCard = () => {
-  return  fetch (`${config.baseUrl}/cards`, {
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: 'cool place',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    })
+//Like crads
+export const likeCrad = (cardId) => {
+  return request(`cards/likes/${cardId}`, {
+    method: "PUT",
+  });
+}
 
+
+//Unlike cards
+export const unlikeCards = (cardId) => {
+  return request(`cards/likes/${cardId}`, {
+    method: "DELETE"
   })
 }
+
+
+//New user's avatar
+export const newAvatar = (avatarLink) => {
+  return request('users/me/avatar', {
+    method: "PATCH",
+    body: JSON.stringify(avatarLink),
+  });
+};
+
+
 
 
 

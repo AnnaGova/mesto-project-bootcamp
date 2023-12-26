@@ -1,122 +1,146 @@
 import './styles/index.css';
-import { fillCard } from './components/card';
+
 //Импорт функции для удления, лайков и открытия попапов картинок
-import { setCardsEventListeners } from './components/card';
 import { enableValidation, formConfig } from './components/validate';
-import { createCard } from './components/card';
 import { closePopup, openPopup } from './components/modal';
+import * as constants from './components/constants';
+import * as api from './components/api';
+import { CreateCrads, renderCrads } from './components/card';
+export let userID = null;
 
-//Выбор элементов
-const editButton = document.querySelector('.profile__button-edit');
-const profilePopup = document.querySelector('.profile-popup');
-const addButton = document.querySelector('.profile__button-add');
-const photosPopup = document.querySelector('.popup-photos');
-const picturesPopup = document.querySelector('.pictures-popup');
-const formPlaces = document.forms['addPhotos'];
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
-const formElement = document.querySelector('.popup__profile-form');
-const nameInput = document.querySelector('.popup__form-item_name');
-const jobInput = document.querySelector('.popup__form-item_description');
-const placesList = document.querySelector('.cards__list');
-const submitAddPhotosButton =  document.querySelector('.popup-photos__button-save');
-const editAvatar = document.querySelector('.profile__avatar-edit');
-const popupAvatar = document.querySelector('.popup-avatar');
-const avatarEditForm = document.querySelector('.popup-avatar__form');
-const vatarSubmitButton = document.querySelector('.popup-editavatar__button-save');
+//Отображение карточек сервера
 
-//Добавление карточек с картинками через список
-fillCard();
-setCardsEventListeners();
+api.getInitialCrads()
+  .then(data => {
+    data.forEach(function (card) {
+      renderCrads(card, constants.placesList);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
 //Добавление фотографий через форму в popup
-formPlaces.addEventListener('submit', addPlaces);
+constants.formPlaces.addEventListener('submit', addPlaces);
+
 //Кнопка открытия редактирования профиля
-editButton.addEventListener('click', function() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileDescription.textContent;
-  openPopup(profilePopup);
+constants.editButton.addEventListener('click', function() {
+  constants.nameInput.value = constants.profileName.textContent;
+  constants.jobInput.value = constants.profileDescription.textContent;
+  openPopup(constants.profilePopup);
 });
 // Использование функции для открытия попапа добавления новых мест
-addButton.addEventListener('click', function(){
-  openPopup(photosPopup);
-  submitAddPhotosButton.setAttribute('disabled', true);
-  submitAddPhotosButton.classList.add('popup__button-save_disabled');
+constants.addButton.addEventListener('click', function(){
+  openPopup(constants.photosPopup);
+  constants.submitAddPhotosButton.setAttribute('disabled', true);
+  constants.submitAddPhotosButton.classList.add('popup__button-save_disabled');
 });
-
-editAvatar.addEventListener('click', function() {
-  openPopup(popupAvatar);
-  vatarSubmitButton.setAttribute('disabled', true);
-  vatarSubmitButton.classList.add('popup__button-save_disabled');
+//Кнопка редактирования аватара
+constants.editAvatar.addEventListener('click', function() {
+  openPopup(constants.popupAvatar);
+  constants.vatarSubmitButton.setAttribute('disabled', true);
+  constants.vatarSubmitButton.classList.add('popup__button-save_disabled');
 
 })
+
+
 
 //Функция изменения фотографии профиля
 function changeAvatar(evt) {
   evt.preventDefault();
+  setStatusButton({
+    button: constants.vatarSubmitButton,
+    text: 'Сохраняем...',
+    disabled: true
+  })
   const imgAva = document.querySelector('.profile__avatar');
   const newAvaLink = document.querySelector('.popup__form_editavatar');
-  imgAva.src = newAvaLink.value;
+  const avaLinkValue = newAvaLink.value;
 
-  avatarEditForm.reset();
-  closePopup(popupAvatar);
-};
+  const newProfAva = {avatar: avaLinkValue}
 
-avatarEditForm.addEventListener('submit', changeAvatar);
+  api.newAvatar(newProfAva)
+    .then(dataFromServer => {
+      imgAva.src = dataFromServer.avatar;
+      constants.avatarEditForm.reset();
+      closePopup(constants.popupAvatar);
+    })
+    .catch(error => {
+      console.error('Error updating avatar:', error);
+      // Handle the error as needed
+    });
+  }
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
+constants.avatarEditForm.addEventListener('submit', changeAvatar);
+
+// Обработчик «отправки» формы редактирования данных профиля
 function handleProfileFormSubmit(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+    setStatusButton({
+      button: constants.submitButtonProfile,
+      text: 'Сохраняем...',
+      disabled: true
+    })
 
-    const nameValue = nameInput.value;
-    const jobValue = jobInput.value;
+    const nameValue = constants.nameInput.value;
+    const jobValue = constants.jobInput.value;
 
-    // Вставьте новые значения с помощью textContent
-    profileName.textContent = nameValue;
-    profileDescription.textContent = jobValue;
+    const newProfInfo = {name: nameValue, about: jobValue};
 
-    closePopup(profilePopup);
+    api.editProfile(newProfInfo).then(serverData => {
+      constants.profileName.textContent = serverData.name;
+      constants.profileDescription.textContent = serverData.about;
+    })
+
+    closePopup(constants.profilePopup);
 
 };
 
 // Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', handleProfileFormSubmit);
+constants.formElement.addEventListener('submit', handleProfileFormSubmit);
 
 
+//функция добавления новой карточки
 function addPlaces(evt) {
   evt.preventDefault();
-  //Копируем значение teanplate
-  const cardElement = createCard();
-//Получаем значение полей ввода
-  const placeNameInput = formPlaces.querySelector('.popup__form-item_place');
-  const linkInput = formPlaces.querySelector('.popup__form-item_link');
+  setStatusButton({
+    button: constants.submitAddPhotosButton,
+    text: 'Создаем...',
+    disabled: true
+  })
+  const dataPicfromBody = {
+    name: constants.placeNameInput.value,
+    link: constants.linkInput.value
 
-  const namePlaceValue = placeNameInput.value;
-  const linkValue = linkInput.value;
+  };
+  api.addNewCard(dataPicfromBody).then(NewCradDataServ =>
+    renderCrads(NewCradDataServ, constants.placesList, 'prepend'));
 
-
-//выбираем места для вставки новых значений
-  const placeName = cardElement.querySelector('.cards__name');
-  const placePhoto = cardElement.querySelector('.cards__img');
-//присваеваем новые значения
-  placePhoto.src = linkValue;
-  placeName.textContent = namePlaceValue;
-  placePhoto.alt = namePlaceValue;
-//добавляем карточку в список
-  placesList.prepend(cardElement);
-
-  closePopup(photosPopup);
-  formPlaces.reset();
-
+    closePopup(constants.photosPopup);
 };
 
 //Валидация форм
 enableValidation(formConfig);
 
-import { getUserInformation, getInitialCrads, editProfile, addNewCard } from './components/api';
 
-getUserInformation();
-getInitialCrads();
-editProfile();
-//addNewCard();
+Promise.all([api.gerUsersInformation(), api.getInitialCrads()])
+  .then(([profData, cradsData]) => {
+
+    userID = profData._id;
+    cradsData.forEach((card) => {
+      renderCrads(card, constants.placesList);
+    });
+  })
+  .catch(console.error)
+
+//Улучшение ux
+
+function setStatusButton({button, text, disabled}) {
+  if(!disabled) {
+    button.disabled = false
+  } else {
+    button.disabled = 'disabled'
+  }
+  button.textContent = text;
+}
