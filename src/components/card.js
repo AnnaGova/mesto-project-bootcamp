@@ -4,7 +4,7 @@ import { picturesPopup, imgPopup, textImgPopup } from "./constants";
 import { openPopup } from "./modal";
 
 
-export function CreateCrads(card) {
+export function createCrads(card) {
   const cardsElement = document.querySelector('#cards-teamplate').content.querySelector('.cards__item').cloneNode(true);
 
   const cradsImg = cardsElement.querySelector('.cards__img');
@@ -38,6 +38,15 @@ export function CreateCrads(card) {
 
   })
 
+  if (likesNumber.length !== 0) {
+    likesNumber.forEach(like => {
+      if (like._id === userID) {
+        cradsLikeImg.classList.add('cards__button-like_active');
+      }
+    });
+  }
+
+
   // Update likes event listener
 cradsLikeImg.addEventListener('click', () => {
   const isLiked = cradsLikeImg.classList.contains('cards__button-like_active');
@@ -45,8 +54,8 @@ cradsLikeImg.addEventListener('click', () => {
   if (isLiked) {
     // If already liked, perform unlike
     unlikeCards(card._id)
-      .then((result) => {
-        cardsLikeCounter.textContent = likesNumber.length;
+      .then((updateCard) => {
+        cardsLikeCounter.textContent = updateCard.likes.length;
         cradsLikeImg.classList.remove('cards__button-like_active');
       })
       .catch(error => {
@@ -55,25 +64,23 @@ cradsLikeImg.addEventListener('click', () => {
   } else {
     // If not liked, perform like
     likeCrad(card._id)
-      .then((result) => {
-        cardsLikeCounter.textContent = likesNumber.length;
-        cradsLikeImg.classList.add('cards__button-like_active');
-      })
-      .catch(error => {
-        console.error('Error liking card:', error);
-      });
+    .then((updateCard) => {
+      cardsLikeCounter.textContent = updateCard.likes.length;
+      cradsLikeImg.classList.add('cards__button-like_active');
+    })
+    .catch(error => {
+      console.error('Error liking card:', error);
+    });
   }
-
-  cardsLikeCounter.textContent = likesNumber.length;
-
 });
 
+cardsLikeCounter.textContent = likesNumber.length;
 
   return cardsElement;
 }
 
 export function renderCrads(data, containerNode, position = "append") {
-  const newCrad = CreateCrads(data);
+  const newCrad = createCrads(data);
   switch (position) {
     case "append":
       containerNode.append(newCrad);

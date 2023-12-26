@@ -61,6 +61,7 @@ export const deleteCard = (_id) => {
 export const likeCrad = (cardId) => {
   return request(`cards/likes/${cardId}`, {
     method: "PUT",
+    body: JSON.stringify({_id: cardId}),
   });
 }
 
@@ -68,7 +69,8 @@ export const likeCrad = (cardId) => {
 //Unlike cards
 export const unlikeCards = (cardId) => {
   return request(`cards/likes/${cardId}`, {
-    method: "DELETE"
+    method: "DELETE",
+    body: JSON.stringify({_id: cardId}),
   })
 }
 

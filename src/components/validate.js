@@ -1,12 +1,4 @@
 
-export const formConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__form-item',
-  submitButtonSelector: '.popup__button-save',
-  inactiveButtonClass: 'popup__button-save_disabled',
-  inputErrorClass: 'popup__form-item_error',
-  errorClass: 'text-error_visible'
-};
 
 function hideInputErrors(inputElement, errorElement, config) {
   inputElement.classList.remove(config.inputErrorClass);

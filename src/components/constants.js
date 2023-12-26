@@ -21,5 +21,5 @@ export const imgAva = document.querySelector('.profile__avatar');
 export const submitButtonProfile = document.querySelector('.profile-popup__button-save');
 export const imgPopup = document.querySelector('.pictures-popup__img');
 export const textImgPopup =document.querySelector('.pictures-popup__text');
-
+export const newAvaLink = document.querySelector('.popup__form_editavatar');
 
