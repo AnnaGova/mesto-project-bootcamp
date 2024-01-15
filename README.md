@@ -16,4 +16,4 @@
 4. Удалять из галереии фотографии.
 5. При нажатиии на картинку открывется pop-up с увеличиным изображением места.
 
-Проект можно просмотреть по ссылке **[Mesto](https://annagova.github.io/Mesto/index.html)**
+Проект можно просмотреть по ссылке **[Mesto](https://annagova.github.io/mesto-project-bootcamp/)**
